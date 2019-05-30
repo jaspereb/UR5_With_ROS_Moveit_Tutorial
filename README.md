@@ -10,7 +10,7 @@ It is based on the instructions [here](http://wiki.ros.org/universal_robot/Tutor
 
 -I tested this code with the UR polyscope version 3.9.1 but previous versions should also work. If you are updating the polyscope software you need to do each subversion in order (3.4.X, 3.5.X, 3.6.X and so on). You can get these files from the UR website, you will need a USB to copy them onto.
 
--You need a network connection to the arm, the simplest method is to set DHCP under the settings->network menu and read the IP address once it appears there. You can also run a direct ethernet connection using the 'Configure Your Hardware' instructions [here](http://wiki.ros.org/universal_robot/Tutorials/Getting%20Started%20with%20a%20Universal%20Robot%20and%20ROS-Industrial) 
+-You need a network connection to the arm, the simplest method is to set DHCP under the settings->network menu and read the IP address once it appears there. You can also run a direct ethernet connection using the 'Configure Your Hardware' instructions [here](http://wiki.ros.org/universal_robot/Tutorials/Getting%20Started%20with%20a%20Universal%20Robot%20and%20ROS-Industrial). Your computer should ideally be on the same subnet as the arm. 
 
 -Note the IP of the robot and check you can ping it using 
 `ping IP_FROM_ABOVE`
@@ -40,6 +40,8 @@ rosdep install --rosdistro kinetic --ignore-src --from-paths src`
 `cd ~/catkin_ws/src
 git clone -b kinetic-devel git@github.com:ros-industrial/ur_modern_driver.git`
 
+This was tested in June 2019, so if there are later breaking changes you may need to grab that version of the repository. 
+
 then rebuild your catkin workspace with 
 
 `cd ~/catkin_ws
@@ -54,10 +56,10 @@ CHANGE TO USE LOW BANDWIDTH CONTROLLER??
 # Known Problems
 There are three major issues with the default setup of the packages you installed:
 
-1) The controllers are dependent on the speed setting on the UR tablet. At 100% speed the moveit motion commands and demonstration scripts (like the ur_driver test_move.py script) move extremely quickly. 
+1) The controllers are dependent on the speed setting on the UR tablet. At 100% speed the moveit motion commands and demonstration scripts (like the ur_driver test_move.py script) move extremely quickly. At lower speeds the controller gains are incorrect leading to over/undershoot.
 
 2) Moveit! fails to create reasonable plans without reduced joint angle limits.
 
-3) The ur_modern_driver by default 
+3) The ur_modern_driver by default uses a velocity controller. This is ideal for tasks such as visual servoing but most applications are better served by a position controller. So the default setting is changed to use this in my provided files.
 
 
