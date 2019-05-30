@@ -7,6 +7,8 @@ There are a few tricks to setting up a UR arm for use with ROS, after working th
 
 It is based on the instructions [here](http://wiki.ros.org/universal_robot/Tutorials/Getting%20Started%20with%20a%20Universal%20Robot%20and%20ROS-Industrial) and modified to use the ur_modern_driver.
 
+![Image](media/frontImg.png)
+
 # Requirements
 -To begin with you should have ROS kinetic installed by following http://wiki.ros.org/kinetic/Installation/Ubuntu 
 
