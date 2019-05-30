@@ -25,15 +25,19 @@ This command will clone the current repository, you can run it from anywhere **e
 
 `git clone git@github.com:jaspereb/UR5_With_ROS_Moveit_Tutorial.git`
 
+`cd UR5_With_ROS_Moveit_Tutorial/`
+
 `DL_DIR=$PWD`
 
 Install the universal_robot package
 
-`cp universal_robot/ ~/catkin_ws/src/`
+`cp -r universal_robot/ ~/catkin_ws/src/`
 
 `cd ~/catkin_ws`
 
 `catkin_make clean`
+
+`catkin_make`
 
 `catkin_make install`
 
@@ -47,9 +51,11 @@ Install the ur_modern_driver package
 
 `cd $DL_DIR`
 
-`cp ur_modern_driver/ ~/catkin_ws/src/`
+`cp -r ur_modern_driver/ ~/catkin_ws/src/`
 
 `catkin_make clean`
+
+`catkin_make`
 
 `catkin_make install`
 
