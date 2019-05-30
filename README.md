@@ -66,9 +66,48 @@ You can get around this be using the low bandwidth controller as described below
 
 If you do reduce the default speed the ros_control approach will cause the arm to significantly overshoot waypoints, so if you have one close to an obstacle it may crash. 
 
+# Using the Low Bandwidth Trajectory Follower
+
+There are several methods for controlling the robot using the ur_modern_driver package. I will cover how to use 2 of these. The Low Bandwidth Trajectory Follower (LBTF) is the preferred method and should be sufficient unless you have high precision and feedback requirements. If you are operating over wifi or with high CPU loads on the ROS computer, you will need to use the LBTF.
+
+To set this up you need to use the default `controllers.yaml` file from the universal_robot package. So if you replaced this in order to use the ros_control method, you need to return it to default be replacing it with the file from this repo in the `LBTF/controller.yaml` location.
+
+You also need to alter the `ur5_bringup.launch` file within the ur_modern_driver package. There is an updated version provided, so copy this from `LBTF/ur5_bringup_LBTF.launch` into the `~/catkin_ws/src/ur_modern_driver/launch` directory.
+
+I have changed the default `time_interval` parameter in this file to 0.004. The arm speed is the ratio of this to the `servoj_time` so this will run it at 50% speed. If you change this to 0.008 it will be back to 100% speed, but 50% is a good starting point the first time you run the driver. You should not have the same undershoot/overshoot problems that the ros_control method does when running at slower speeds.
+
+## Launching with LBTF
+
+To actually control the arm once you have made the above changes you need to establish a connection, enable the motors, launch the driver, launch the planner and finally launch Rviz. To do this:
+
+1. Power on the arm, enable the DHCP setting and take note of the IP address once it appears
+
+2. Check you can ping the arm  
+
+3. Open an empty program, enable the arm motors and drive the arm to the home position
+
+4. You should now be in the 'Move' menu on the UR tablet. If you are in the movement execution window (the one that has an 'Auto' and a 'Manual' button) then the driver will not work.
+
+Run each of the following commands in a different terminal.
+
+5. Run `roslaunch ur_modern_driver ur5_bringup_LBTF.launch robot_ip:=xxx.xxx.xxx.xxx` using the IP address you found before
+
+6. Run `roslaunch ur5_moveit_config ur5_moveit_planning_execution.launch` and wait for this to read `You can start planning now!`
+
+7. Run `roslaunch ur5_moveit_config moveit_rviz.launch config:=true` which will bring up an Rviz window. Check that the arm configuration matches what you expect. If it does not then the driver probably did not launch properly, check your terminal windows for errors.
+
+9. You can leave the OMPL planner as 'unspecified' and change to the 'Planning' tab. Click 'Select Start State', make sure it is set to <current> and click 'Update'.
+
+10. Move the end of the arm slightly by dragging the blue ball. Then click the 'Plan' button. Check that the plan is reasonable, will not go through the table and won't destroy your end effector. If it does several ridiculous loops before reaching the goal, you probably didn't set the joint limits to be reduced in the `~/catkin_ws/src/ur_modern_driver/launch/ur5_bringup_LBTF.launch` file.
+
+11. If you are happy with the plan, be ready on the e-stop button and click 'Execute'. 
+
+Congratulations, you now have the arm running with moveit!
+
+
 # Using ros_control
 
-There are several methods for controlling the robot using the ur_modern_driver package. I will cover how to use 2 of these. The first is through a position based controller running in ros_control. To launch this by default you need to change the ur5_ros_control.launch file slightly. (Or the appropriate launch file for your robot if using UR10 or UR3).
+An alternative method for control is using the ros_control package. To launch this by default you need to change the ur5_ros_control.launch file slightly. (Or the appropriate launch file for your robot if using UR10 or UR3).
 
 For a UR5 you can replace the `~/catkin_ws/src/ur_modern_driver/launch/ur5_ros_control.launch` file with the one from this repo, the changes to the file are:
 
@@ -82,7 +121,7 @@ to
 `<arg name="stopped_controllers" default="vel_based_pos_traj_controller joint_group_vel_controller"/>`
 `<arg name="limited" default="true"/>`
 
-This will now launch the position controller by default, with limited joint angles so that moveit! planning works. You also need to add the position controller to the list of moveit! controllers. Replace the `controllers.yaml` file in `catkin_ws/src/universal_robot/ur5_moveit_config/config` with the one from this repository. If using UR10 / UR3 make sure the alter the correct controllers file. 
+This will now launch the position controller by default, with limited joint angles so that moveit! planning works. You also need to add the position controller to the list of moveit! controllers. Replace the `controllers.yaml` file in `catkin_ws/src/universal_robot/ur5_moveit_config/config` with the one from this repository in the `ros_control/controller.yaml` location. If using UR10 / UR3 make sure the alter the correct controllers file. 
 
 ## Launching with ros_control
 To actually control the arm once you have made the above changes you need to establish a connection, enable the motors, launch the driver, launch the planner and finally launch Rviz. To do this:
@@ -113,6 +152,4 @@ Run each of the following commands in a different terminal.
 
 Congratulations, you now have the arm running with moveit!
 
-# Using the Low Bandwidth Controller
 
-If you are operating over wifi or with high CPU loads on the ROS computer, you may need to use the low bandwidth controller. In order to do this...
