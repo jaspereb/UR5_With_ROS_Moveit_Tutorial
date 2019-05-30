@@ -53,6 +53,8 @@ Install the ur_modern_driver package
 
 `cp -r ur_modern_driver/ ~/catkin_ws/src/`
 
+`cd ~/catkin_ws`
+
 `catkin_make clean`
 
 `catkin_make`
