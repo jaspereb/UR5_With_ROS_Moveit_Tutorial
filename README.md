@@ -109,7 +109,7 @@ Congratulations, you now have the arm running with moveit!
 
 An alternative method for control is using the ros_control package. To launch this by default you need to change the ur5_ros_control.launch file slightly. (Or the appropriate launch file for your robot if using UR10 or UR3).
 
-For a UR5 you can replace the `~/catkin_ws/src/ur_modern_driver/launch/ur5_ros_control.launch` file with the one from this repo, the changes to the file are:
+For a UR5 you can replace the `~/catkin_ws/src/ur_modern_driver/launch/ur5_ros_control.launch` file with the one from this repo under `ros_control/ur5_ros_control.launch`, the changes to the file are:
 
 `<arg name="controllers" default="joint_state_controller force_torque_sensor_controller vel_based_pos_traj_controller"/>`
 `<arg name="stopped_controllers" default="pos_based_pos_traj_controller joint_group_vel_controller"/>`
