@@ -83,9 +83,9 @@ If you do reduce the default speed the ros_control approach will cause the arm t
 
 There are several methods for controlling the robot using the ur_modern_driver package. I will cover how to use 2 of these. The Low Bandwidth Trajectory Follower (LBTF) is the preferred method and should be sufficient unless you have high precision and feedback requirements. If you are operating over wifi or with high CPU loads on the ROS computer, you will need to use the LBTF.
 
-To set this up you need to use the default `controllers.yaml` file from the universal_robot package. So if you replaced this in order to use the ros_control method, you need to return it to default be replacing it with the file from this repo in the `LBTF/controllers.yaml` location.
+To set this up you need to use the default `controllers.yaml` file from the universal_robot package. So if you updated this in order to use the ros_control method, you need to replace the `~/catkin_ws/src/universal_robot/ur5_moveit_config/config/controllers.yaml` file with the file from this repo in the `LBTF/controllers.yaml` location.
 
-You also need to alter the `ur5_bringup.launch` file within the ur_modern_driver package. There is an updated version provided, so copy this from `LBTF/ur5_bringup_LBTF.launch` into the `~/catkin_ws/src/ur_modern_driver/launch` directory.
+You also need to alter the `~/catkin_ws/src/ur_modern_driver/launch/ur5_bringup.launch` file within the ur_modern_driver package. There is an updated version provided, so copy this from `LBTF/ur5_bringup_LBTF.launch` into the location above.
 
 I have changed the default `time_interval` parameter in this file to 0.004. The arm speed is the ratio of this to the `servoj_time` so this will run it at 50% speed. If you change this to 0.008 it will be back to 100% speed, but 50% is a good starting point the first time you run the driver. You should not have the same undershoot/overshoot problems that the ros_control method does when running at slower speeds.
 
