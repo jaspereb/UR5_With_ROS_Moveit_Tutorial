@@ -31,27 +31,27 @@ Install the universal_robot package
 
 `cp universal_robot/ ~/catkin_ws/src/`
 
-`cd ~/catkin_ws
+`cd ~/catkin_ws`
 
-catkin_make clean
+`catkin_make clean`
 
-catkin_make install`
+`catkin_make install`
 
 If you get any errors at this stage you will need to stop and fix them, these are typically due to missing dependencies which may be fixed by running
 
-`rosdep update
+`rosdep update`
 
-rosdep install --rosdistro kinetic --ignore-src --from-paths src`
+`rosdep install --rosdistro kinetic --ignore-src --from-paths src`
 
 Install the ur_modern_driver package
 
-`cd $DL_DIR
+`cd $DL_DIR`
 
-cp ur_modern_driver/ ~/catkin_ws/src/
+`cp ur_modern_driver/ ~/catkin_ws/src/`
 
-catkin_make clean
+`catkin_make clean`
 
-catkin_make install`
+`catkin_make install`
 
 You now have all of the required packages installed.
 
