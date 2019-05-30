@@ -50,9 +50,6 @@ catkin_make install`
 
 You now have all of the required packages installed.
 
-
-CHANGE TO USE LOW BANDWIDTH CONTROLLER??
-
 # Known Problems
 There are three major issues with the default setup of the packages you installed:
 
@@ -62,4 +59,33 @@ There are three major issues with the default setup of the packages you installe
 
 3) The ur_modern_driver by default uses a velocity controller. This is ideal for tasks such as visual servoing but most applications are better served by a position controller. So the default setting is changed to use this in my provided files.
 
+# Using ros_control
 
+There are several methods for controlling the robot using the ur_modern_driver package. I will cover how to use 2 of these. The first is through a position based controller running in ros_control. To launch this by default you need to change the ur5_ros_control.launch file slightly. (Or the appropriate launch file for your robot if using UR10 or UR3).
+
+Run
+
+`cd ~/catkin_ws/src/ur_modern_driver/launch
+gedit ur5_ros_control.launch`
+
+And change the following lines from
+
+`<arg name="controllers" default="joint_state_controller force_torque_sensor_controller vel_based_pos_traj_controller"/>`
+
+to
+
+`<arg name="controllers" default="joint_state_controller force_torque_sensor_controller pos_based_pos_traj_controller"/>`
+
+and change
+
+`<arg name="stopped_controllers" default="pos_based_pos_traj_controller joint_group_vel_controller"/>`
+
+to
+
+`<arg name="stopped_controllers" default="vel_based_pos_traj_controller joint_group_vel_controller"/>`
+
+This will now launch the position controller by default. You also need to add the position controller to the list of moveit! controllers. Replace the `controllers.yaml` file in `catkin_ws/src/universal_robot/ur5_moveit_config/config` with the one from this repository. If using UR10 / UR3 make sure the alter the correct controllers file. 
+
+# Using the Low Bandwidth Controller
+
+If you are operating over wifi or with high CPU loads on the ROS computer, you may need to use the low bandwidth controller. In order to do this...
