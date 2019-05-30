@@ -16,36 +16,41 @@ It is based on the instructions [here](http://wiki.ros.org/universal_robot/Tutor
 `ping IP_FROM_ABOVE`
 
 # Installations
-Follow only the installation portions of the instructions from https://github.com/ros-industrial/universal_robot and https://github.com/ros-industrial/ur_modern_driver/. If you also try to execute the demonstration commands the robot may not behave as you expect due to the issues described in the 'Known Problems' section.
 
+A copy of both the ur_modern_driver and universal_robotics package has been included here, so that you don't have to worry about versioning. Each of these repositories retains its own licence and also has documentation in the respective folder, they are only included here for convenience. Note that we are using the kinetic-devel branches for both of these.
 
--Download the Universal Robot repo from https://github.com/ros-industrial/universal_robot into your catkin workspace. Do not use the apt-get command but compile from source by following the 'Building from Source' instructions. **Important: Make sure you clone the kinetic devel branch using:**
+Run the following commands to install them, this assumes your catkin_ws folder has been created in the user home directory.
 
-`cd ~/catkin_ws/src
-git clone -b kinetic-devel git@github.com:ros-industrial/universal_robot.git`
+This command will clone the current repository, you can run it from anywhere **except** from within the catkin_ws folder.
 
--Build your catkin workspace by running
+`git clone git@github.com:jaspereb/UR5_With_ROS_Moveit_Tutorial.git`
+
+`DL_DIR=$PWD`
+
+Install the universal_robot package
+
+`cp universal_robot/ ~/catkin_ws/src/`
 
 `cd ~/catkin_ws
+
 catkin_make clean
+
 catkin_make install`
 
 If you get any errors at this stage you will need to stop and fix them, these are typically due to missing dependencies which may be fixed by running
 
 `rosdep update
+
 rosdep install --rosdistro kinetic --ignore-src --from-paths src`
 
--Download the ur_modern_driver package kinect-devel branch into your catkin workspace using 
+Install the ur_modern_driver package
 
-`cd ~/catkin_ws/src
-git clone -b kinetic-devel git@github.com:ros-industrial/ur_modern_driver.git`
+`cd $DL_DIR
 
-This was tested in June 2019, so if there are later breaking changes you may need to grab that version of the repository. 
+cp ur_modern_driver/ ~/catkin_ws/src/
 
-then rebuild your catkin workspace with 
-
-`cd ~/catkin_ws
 catkin_make clean
+
 catkin_make install`
 
 You now have all of the required packages installed.
