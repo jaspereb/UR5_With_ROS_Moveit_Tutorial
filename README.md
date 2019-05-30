@@ -1,7 +1,7 @@
 # UR5_With_ROS_Moveit_Tutorial
-A tutorial on setting up a UR CB arm to run with ROS and Moveit!
+A tutorial on setting up a real UR5 CB arm to run with ROS and Moveit!
 
-## There is an accompanying screen recording for this tutorial at https://youtu.be/18SQssJ-l_Y which you should watch first
+## There is an accompanying screen recording for this tutorial at https://youtu.be/18SQssJ-l_Y
 
 There are a few tricks to setting up a UR arm for use with ROS, after working through these I decided to document the process for other users. This tutorial is specifically how I set up a UR5 CB series arm with Moveit! although it should be a similar process for any other arm supported by the ur_modern_driver package. 
 
