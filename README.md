@@ -1,4 +1,4 @@
-# UR5_With_ROS_Moveit_Tutorial
+# UR5 With ROS Moveit! Tutorial
 A tutorial on setting up a real UR5 CB arm to run with ROS and Moveit!
 
 ## There is an accompanying screen recording for this tutorial at https://youtu.be/18SQssJ-l_Y
